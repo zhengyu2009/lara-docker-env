@@ -1,4 +1,5 @@
 FROM php:8.2-fpm
+# FROM php:7.4-fpm
 
 # Arguments defined in docker-compose.yml
 ARG user
@@ -22,6 +23,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install xdebug
+# php7の場合、RUN pecl install xdebug2.9.0
 RUN pecl install xdebug \
   && docker-php-ext-enable xdebug
 

@@ -8,7 +8,8 @@ services:
       context: ./
       dockerfile: docker-compose/php/Dockerfile
     image: app-php
-    container_name: app-container
+    # 複数プロジェクトの場合、container_name重複しないように
+    container_name: app-appname
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -16,8 +17,9 @@ services:
       - ./docker-compose/php/php.ini:/usr/local/etc/php/php.ini
 
   db:
+    # image: mysql:5.7
     image: mysql:8
-    container_name: db-container
+    container_name: db-appname
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -32,7 +34,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: nginx-container
+    container_name: nginx-appname
     restart: unless-stopped
     ports:
       - "8000:80"
